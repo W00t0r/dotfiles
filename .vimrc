@@ -1,4 +1,5 @@
 " Set colorscheme
+set background=dark
 colorscheme desert
 
 set nocompatible               " be iMproved
@@ -7,58 +8,160 @@ set encoding=utf-8             " Necessary to show Unicode glyphs
 set t_Co=256                   " Explicitly tell Vim that the terminal supports 256 colors
 filetype off                   " required!
 
+"Changing Leader Key
+let mapleader = ","
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
-Bundle 'Color-Sampler-Pack'
-Bundle 'ScrollColors'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'ctrlp.vim'
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'vim-flake8'
+Bundle 'Tagbar'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 
 " Powerline configuration
 let g:Powerline_symbols = 'unicode'
 
-syntax on
-set smartindent
-set autoindent
-set expandtab
+" Tab options
 set tabstop=4
 set shiftwidth=4
-set nowrap
+set softtabstop=4
+set expandtab
+set shiftround
 
-set incsearch
-set showmatch
-set hlsearch
-
+" Some common options
+syntax on
+set autoindent
+set smartindent
+set scrolloff=5
+set showmode
+set showcmd
+set hidden
 set wildmenu
-set background=dark
+set wildmode=longest:full
+set complete=.,t,k
+set cursorline
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+set nowrap
+set showmatch
 
 " Make sure the lines don't become too long
 set textwidth=120
 au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
 
-" All the mouse actions should be available as well
+" All the mouse actions should be available
 set mouse=a
+
+" Enable vim-multiedit mappings
+let g:multiedit_nomappings = 1
+
+" Some Flake8 configurations and autostart
+let g:flake8_max_line_length=120
+let g:flake8_max_complexity=8
+let g:flake8_ignore="E712,E711"
+autocmd BufWritePost *.py call Flake8()
+
+" Don't use those arrow-keys to navigate!!
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+
+" Some options to make searching more pleasant
+set hlsearch
+set incsearch
+nmap <F6> :set hlsearch!<CR>
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " Map space to centering the current line
 nmap <space> zz
 
-" Make sure the search results always show up in the middle
-nmap n nzz:set hlsearch<CR>
-nmap N Nzz:set hlsearch<CR>
+" Sort imports (or something else) alphabetically
+vnoremap <Leader>s :sort<CR>
 
-" Toggle search highlighting
-map <silent><F6> :set hlsearch!<CR>
+" Create a sidebar window with the explorer in it
+nmap <Leader><C-o> :25Vex<CR>
+
+" Create a split window and show the definition of item under cursor
+nmap <C-space> :stj <C-R><C-W><CR>
+
+" Create mapping for lvimgrep
+map <F4> :execute "lvimgrep /" . expand("<cword>") . "/j **/*.py" <Bar> lw<CR>
+
+" set relativenumber
+set number
+set norelativenumber
+
+" set undofile
+set shell=/bin/bash
+set lazyredraw
+set matchtime=3
+
+" Set title to window
+set title
+
+" Dictionary path, from which the words are being looked up.
+set dictionary=/usr/share/dict/words
+
+" Better copy and paste
+set pastetoggle=<F3>
+"set clipboard=unnamed
+
+" Disable help buttons
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" Define the tags file
+set tags=~/mytags
+
+" Set vim to save the file on focus out
+au FocusLost * :update
+
+" Define some settings for ctrlp
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+set wildignore+=*.hg,*.svn,*.git "Version control files"
+set wildignore+=*.pyc "Python compiled files"
+set wildignore+=*.sw? "Vim swap files"
+set wildignore+=*.tmp "My own tmp files"
+
+" Make Sure that Vim returns to the same line when we reopen a file"
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \ execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
 
 filetype plugin indent on     " required!
 set ofu=syntaxcomplete#Complete
+
+
+" Show whitespaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+" Automatic reloading of .vimrc
+autocmd! bufwritepost ~/.vimrc source %
 
 " Set all the latex-suite configurations
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2 spell spelllang=en_us

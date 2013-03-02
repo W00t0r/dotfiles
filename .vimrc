@@ -20,14 +20,20 @@ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'scrooloose/nerdtree'
 Bundle 'ctrlp.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'vim-flake8'
 Bundle 'Tagbar'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'vimux'
 
 " Powerline configuration
 let g:Powerline_symbols = 'unicode'
+let g:Powerline_colorscheme = 'solarized256'
+
+" Tagbar binding
+nnoremap <silent> <F9> :TagbarToggle<CR>
 
 " Tab options
 set tabstop=4
@@ -94,7 +100,7 @@ nmap <space> zz
 vnoremap <Leader>s :sort<CR>
 
 " Create a sidebar window with the explorer in it
-nmap <Leader><C-o> :25Vex<CR>
+nmap <Leader><C-o> :NERDTreeToggle<CR>
 
 " Create a split window and show the definition of item under cursor
 nmap <C-space> :stj <C-R><C-W><CR>
@@ -139,6 +145,9 @@ set wildignore+=*.pyc "Python compiled files"
 set wildignore+=*.sw? "Vim swap files"
 set wildignore+=*.tmp "My own tmp files"
 
+let g:ctrlp_extensions = ['tag', 'dirs']
+
+
 " Make Sure that Vim returns to the same line when we reopen a file"
 augroup line_return
     au!
@@ -150,7 +159,6 @@ augroup END
 
 filetype plugin indent on     " required!
 set ofu=syntaxcomplete#Complete
-
 
 " Show whitespaces
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -177,3 +185,19 @@ let g:Tex_CompileRule_dvi = 'latex -shell-escape --interaction=nonstopmode $*'
 let g:Tex_CompileRule_ps = 'dvips -Ppdf -o $*.ps $*.dvi'
 let g:Tex_CompileRule_pdf = 'ps2pdf $*.ps'
 let g:Tex_DefaultTargetFormat = 'pdf'
+
+" --- Some vimux configs ----
+" Prompt for a command to run
+map rp :PromptVimTmuxCommand
+
+" Run last command executed by RunVimTmuxCommand
+map rl :RunLastVimTmuxCommand
+
+" Inspect runner pane
+map ri :InspectVimTmuxRunner
+
+" Close all other tmux panes in current window
+map rx :CloseVimTmuxPanes
+
+" Interrupt any command running in the runner pane
+map rs :InterruptVimTmuxRunner

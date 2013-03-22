@@ -1,6 +1,6 @@
 " Set colorscheme
 set background=dark
-colorscheme desert
+colorscheme torte
 
 set nocompatible               " be iMproved
 set laststatus=2               " Always show the statusline
@@ -70,12 +70,6 @@ set mouse=a
 " Enable vim-multiedit mappings
 let g:multiedit_nomappings = 1
 
-" Some Flake8 configurations and autostart
-let g:flake8_max_line_length=120
-let g:flake8_max_complexity=8
-let g:flake8_ignore="E712,E711"
-autocmd BufWritePost *.py call Flake8()
-
 " Don't use those arrow-keys to navigate!!
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -107,6 +101,10 @@ nmap <C-space> :stj <C-R><C-W><CR>
 
 " Create mapping for lvimgrep
 map <F4> :execute "lvimgrep /" . expand("<cword>") . "/j **/*.py" <Bar> lw<CR>
+
+" Binding for Tagbar
+nmap <leader>l <ESC>:TagbarToggle<cr>
+imap <leader>l <ESC>:TagbarToggle<cr>i
 
 " set relativenumber
 set number
@@ -146,6 +144,8 @@ set wildignore+=*.sw? "Vim swap files"
 set wildignore+=*.tmp "My own tmp files"
 
 let g:ctrlp_extensions = ['tag', 'dirs']
+let g:ctrlp_max_height = 30
+let g:ctrlp_dotfiles = 0
 
 
 " Make Sure that Vim returns to the same line when we reopen a file"

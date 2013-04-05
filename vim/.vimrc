@@ -1,6 +1,5 @@
 " Set colorscheme
-set background=dark
-colorscheme torte
+colorscheme desert
 
 set nocompatible               " be iMproved
 set laststatus=2               " Always show the statusline
@@ -53,7 +52,7 @@ set showcmd
 set hidden
 set wildmenu
 set wildmode=longest:full
-set complete=.,t,k
+set complete=.,t,d,i,k
 set cursorline
 set ttyfast
 set ruler
@@ -69,13 +68,13 @@ au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
 set mouse=a
 
 " Enable vim-multiedit mappings
-let g:multiedit_nomappings = 1
+let g:multiedit_nomappings = 0
 
-" Don't use those arrow-keys to navigate!!
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
+" Some Flake8 configurations and autostart
+let g:flake8_max_line_length=120
+let g:flake8_max_complexity=8
+let g:flake8_ignore="E712,E711"
+" autocmd BufWritePost *.py call Flake8()
 
 " Some options to make searching more pleasant
 set hlsearch
@@ -95,7 +94,7 @@ nmap <space> zz
 vnoremap <Leader>s :sort<CR>
 
 " Create a sidebar window with the explorer in it
-nmap <Leader><C-o> :NERDTreeToggle<CR>
+" nmap <Leader><C-o> :NERDTreeToggle expand("%:h")<CR>
 
 " Create a split window and show the definition of item under cursor
 nmap <C-space> :stj <C-R><C-W><CR>
@@ -144,7 +143,7 @@ set wildignore+=*.pyc "Python compiled files"
 set wildignore+=*.sw? "Vim swap files"
 set wildignore+=*.tmp "My own tmp files"
 
-let g:ctrlp_extensions = ['tag', 'dirs']
+let g:ctrlp_extensions = ['tag']
 let g:ctrlp_max_height = 30
 let g:ctrlp_dotfiles = 0
 
@@ -180,25 +179,9 @@ let g:tex_flavor = "latex"
 let g:Tex_ViewRule_pdf = 'mupdf'
 let g:Tex_ViewRule_dvi = 'xdvi'
 let g:Tex_ViewRule_ps = 'zathura'
-let g:Tex_FormatDependency_pdf = 'dvi,ps,pdf'
-let g:Tex_FormatDependency_ps = 'dvi,ps'
+let g:Tex_FormatDependency_pdf = 'bib,dvi,ps,pdf'
+let g:Tex_FormatDependency_ps = 'bib,dvi,ps'
 let g:Tex_CompileRule_dvi = 'latex -shell-escape --interaction=nonstopmode $*'
 let g:Tex_CompileRule_ps = 'dvips -Ppdf -o $*.ps $*.dvi'
 let g:Tex_CompileRule_pdf = 'ps2pdf $*.ps'
 let g:Tex_DefaultTargetFormat = 'pdf'
-
-" --- Some vimux configs ----
-" Prompt for a command to run
-map rp :PromptVimTmuxCommand
-
-" Run last command executed by RunVimTmuxCommand
-map rl :RunLastVimTmuxCommand
-
-" Inspect runner pane
-map ri :InspectVimTmuxRunner
-
-" Close all other tmux panes in current window
-map rx :CloseVimTmuxPanes
-
-" Interrupt any command running in the runner pane
-map rs :InterruptVimTmuxRunner

@@ -10,23 +10,22 @@ filetype off                   " required!
 "Changing Leader Key
 let mapleader = ","
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
-" My Bundles here:
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'scrooloose/nerdtree'
-Bundle 'ctrlp.vim'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'stephenmckinney/vim-solarized-powerline'
-Bundle 'vim-flake8'
-Bundle 'Tagbar'
-Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-Bundle 'vimux'
+" My Plugins here:
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlp.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'stephenmckinney/vim-solarized-powerline'
+Plugin 'vim-flake8'
+Plugin 'Tagbar'
+Plugin 'jade.vim'
 
 " Powerline configuration
 let g:Powerline_symbols = 'unicode'
@@ -36,9 +35,9 @@ let g:Powerline_colorscheme = 'solarized256'
 nnoremap <silent> <F9> :TagbarToggle<CR>
 
 " Tab options
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 set shiftround
 
@@ -157,6 +156,7 @@ augroup line_return
         \ endif
 augroup END
 
+call vundle#end()
 filetype plugin indent on     " required!
 set ofu=syntaxcomplete#Complete
 
@@ -170,18 +170,3 @@ autocmd BufWinLeave * call clearmatches()
 
 " Automatic reloading of .vimrc
 autocmd! bufwritepost ~/.vimrc source %
-
-" Set all the latex-suite configurations
-autocmd FileType tex setlocal shiftwidth=2 tabstop=2 spell spelllang=en_us
-
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor = "latex"
-let g:Tex_ViewRule_pdf = 'mupdf'
-let g:Tex_ViewRule_dvi = 'xdvi'
-let g:Tex_ViewRule_ps = 'zathura'
-let g:Tex_FormatDependency_pdf = 'bib,dvi,ps,pdf'
-let g:Tex_FormatDependency_ps = 'bib,dvi,ps'
-let g:Tex_CompileRule_dvi = 'latex -shell-escape --interaction=nonstopmode $*'
-let g:Tex_CompileRule_ps = 'dvips -Ppdf -o $*.ps $*.dvi'
-let g:Tex_CompileRule_pdf = 'ps2pdf $*.ps'
-let g:Tex_DefaultTargetFormat = 'pdf'

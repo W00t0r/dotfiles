@@ -2,27 +2,31 @@
 
 timestamp=$(date +%Y-%m-%d_%H.%M.%S)
 
-if [ ! -f "~/.zshrc" ]; then
+# Backup if exists
+if [ -f "$HOME/.zshrc" ]; then
     cp ~/.zshrc ./zsh/.zshrc.bak.$timestamp
     rm ~/.zshrc
-    ln -s $PWD/zsh/.zshrc ~/.zshrc
 fi
+ln -s $PWD/zsh/.zshrc ~/.zshrc
 
-if [ ! -f "~/.oh-my-zsh/themes/w00t0r.zsh-theme" ]; then
+# Backup if exists
+if [ -f "$HOME/.oh-my-zsh/themes/w00t0r.zsh-theme" ]; then
     cp ~/.oh-my-zsh/themes/w00t0r.zsh-theme ./zsh/w00t0r.zsh-theme.bak.$timestamp
     rm ~/.oh-my-zsh/themes/w00t0r.zsh-theme
-    ln -s $PWD/zsh/w00t0r.zsh-theme ~/.oh-my-zsh/themes
 fi
+ln -s $PWD/zsh/w00t0r.zsh-theme ~/.oh-my-zsh/themes
 
-if [ ! -f "~/.vimrc" ]; then
+# Backup if exists
+if [ -f "$HOME/.vimrc" ]; then
     cp ~/.vimrc ./vim/.vimrc.bak.$timestamp
     rm ~/.vimrc
-    ln -s $PWD/vim/.vimrc ~/.vimrc
 fi
+ln -s $PWD/vim/.vimrc ~/.vimrc
 
-if [ ! -f "~/.config/nvim/init.vim" ]; then
+# Backup if exists
+if [ -f "$HOME/.config/nvim/init.vim" ]; then
     rm ~/.config/nvim/init.vim
-    ln -s $PWD/vim/.vimrc ~/.config/nvim/init.vim
 fi
+ln -s $PWD/vim/.vimrc ~/.config/nvim/init.vim
 
 source ~/.zshrc

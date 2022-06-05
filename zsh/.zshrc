@@ -5,7 +5,7 @@ ZSH_THEME="w00t0r"
 
 CASE_SENSITIVE="true"
 HIST_STAMPS="yyyy-mm-dd"
-plugins=(git)
+plugins=(git docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -21,3 +21,8 @@ alias vimrc='vim $HOME/.vimrc'
 
 alias node-docker='docker run -ti -v "$PWD":/usr/src/app -w /usr/src/app -p 3000:3000 node:14'
 alias vim='nvim'
+
+# Add specific local aliases here
+if [ -f "$HOME/.zsh_aliases" ]; then
+    source ~/.zsh_aliases
+fi
